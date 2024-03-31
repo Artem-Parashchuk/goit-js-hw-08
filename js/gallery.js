@@ -88,24 +88,21 @@ const galleryTemplate = images.map(img => showGalleryCard(img)).join('')
 galleryElem.innerHTML = galleryTemplate
 
 galleryElem.addEventListener('click', event => {
+    event.preventDefault();
+
     if(event.target === event.currentTarget) {
         return
     }
 
-    const selectedCard = event.target.closest('.gallery-item')
-    // const imageUrl = selectedCard.querySelector('.gallery-item').src;
-    // const imageAlt = selectedCard.querySelector('.gallery-item').alt;
-    console.dir(selectedCard)
+    const targetImg = event.target
+
     const modalImg = basicLightbox.create(`
         <img
             class="gallery-image"
-            src="${}"
-            // data-source="${card.original}"
-            alt="${}"
-            width="360"
-            height="300"
+            src="${targetImg.dataset.source}"
+            alt="${targetImg.description}"
         />
     `)
-    
+
     modalImg.show()
 })
