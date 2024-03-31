@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+.gallery {
+    max-width: 1200px;
+    padding: 0 10px;
+    margin: 0 auto;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+.gallery-item {
+    max-width: 360px;
+}
+.gallery-link {
+}
+.gallery-image {
+    object-fit: cover;
+}
