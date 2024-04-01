@@ -65,43 +65,50 @@ const images = [
 ];
 
 const galleryElem = document.querySelector('.gallery')
+const fragment = document.createDocumentFragment();
 
 function showGalleryCard(card) {
-    return `
-    <li class="gallery-item">
-        <a class="gallery-link" href="${card.original}">
-            <img
-                class="gallery-image"
-                src="${card.preview}"
-                data-source="${card.original}"
-                alt="${card.description}"
-                width="360"
-                height="300"
-            />
-        </a>
-    </li>
-    `
+    const li = document.createElement('li')
+    li.classList.add('gallery-item')
+
+    const a = document.createElement('a')
+    a.classList.add('gallery-link')
+    a.href = card.original
+
+    const img = document.createElement('img')
+    img.classList.add('gallery-image')
+    img.src = card.preview
+    img.alt = card.description
+    img.setAttribute('data-source', card.original)
+    img.width = 360
+    img.height = 300
+
+    a.appendChild(img)
+    li.appendChild(a)
+
+    return li
 }
 
-const galleryTemplate = images.map(img => showGalleryCard(img)).join('')
+images.forEach(img => {
+    const card = showGalleryCard(img)
+    fragment.appendChild(card)
+})
 
-galleryElem.innerHTML = galleryTemplate
+galleryElem.appendChild(fragment)
 
 galleryElem.addEventListener('click', event => {
-    event.preventDefault();
+    event.preventDefault()
 
-    if(event.target === event.currentTarget) {
+    if(event.target.tagName !== 'IMG'){
         return
     }
 
-    const targetImg = event.target
-
     const modalImg = basicLightbox.create(`
         <img
-            class="gallery-image"
-            src="${targetImg.dataset.source}"
-            alt="${targetImg.description}"
-        />
+            class='gallery-image'
+            src='${event.target.dataset.source}'
+            alt='${event.target.alt}'
+        >
     `)
 
     modalImg.show()
